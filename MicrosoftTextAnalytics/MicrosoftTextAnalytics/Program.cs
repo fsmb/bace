@@ -21,20 +21,19 @@ namespace MicrosoftTextAnalytics
             s_analyticsService = new TextAnalyticsService(msApiSubscriptionKey, azureRegion);
 
             var textSourceDirectory = @"C:\Users\alam\Federation of State Medical Boards\Information Services - BACE\Sexual Board Orders\";
-
-            AnalyzeFolderDocuments(textSourceDirectory);
+            var outputPath = @"C:\temp\MY_BACE\Key Phrases\";
+            AnalyzeFolderDocuments(textSourceDirectory, outputPath);
         }
 
 
-        private static void AnalyzeFolderDocuments(string folderPath)
+        private static void AnalyzeFolderDocuments(string folderPath, string outputPath)
         {
             var batchSize = 20;
             var files = Directory.EnumerateFiles(folderPath, "*.txt", SearchOption.AllDirectories);
 
             //Break down file list into batches of batchSize
-            //var filesBatched = files.Select(( id, index ) => new { id, index }).GroupBy(x => x.index / batchSize).
-            //    Select(g => g.Select(x => x.id));
-            var filesBatched = new List<List<string>>() { new List<string>() { files.FirstOrDefault() } };
+            var filesBatched = files.Select(( id, index ) => new { id, index }).GroupBy(x => x.index / batchSize).
+                Select(g => g.Select(x => x.id));
             foreach (var batch in filesBatched)
             {
 
@@ -87,7 +86,7 @@ namespace MicrosoftTextAnalytics
 
                     };
 
-                    var path = Path.Combine(@"C:\temp\MY_BACE\", $"Key Phrases\\{request.FolderName}\\{request.FileName}.json");
+                    var path = Path.Combine(outputPath, $"{request.FolderName}\\{request.FileName}.json");
                     //Save the record to a json file for review
                     completeResult.SaveRecordJsonFile(path);
                 }
