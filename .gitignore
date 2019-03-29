@@ -262,3 +262,7 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Python packages
+.mypy_cache/
+classifiers/neural/glove_embeddings/*
