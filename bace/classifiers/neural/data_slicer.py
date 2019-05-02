@@ -1,22 +1,28 @@
-from typing import List
 
-
-def slice_data(X_data: List[List[str]], y_data: List[int], slice_length=100, overlap_percent=0):
+def slice_data(X_data, y_data = None, slice_length=100, overlap_percent=0):
     """
-	:param X_data: a list of lists of symbols
-	:param y_data: a list of classes that corresponds to X_data
-	:param slice_length: how long each slice should be
-	:param overlap_percent: what percent of the slices will be overlap with the adjacent slices
-	:return: a tuple (X_sliced, y_sliced) st:
+
+    Parameters
+    ----------
+    X_data : array_like
+
+    y_data : array_like, optional
+    slice_length : int, optional
+    overlap_percent : float, optional
+
+    Returns
+    -------
+    x_sliced : array_like
 		X_sliced is a list of lists
-		y_sliced is a list of class labels
-		len(X_sliced) == len(y_sliced) == N
 		X_sliced = [slice1, slice2, slice3... sliceN]
-		y_sliced = [class1, class2, class3... classN]
 		for all i (slice i is a list of symbols)
 		for all i (slice i is drawn from a doc with class i)
 		for all i (slice i has length at most slice_length)
-	"""
+	y_sliced: array_like
+		y_sliced is a list of  labels, or none if y_data is none
+		len(X_sliced) == len(y_sliced) == N
+		y_sliced = [class1, class2, class3... classN]
+    """
 
     if overlap_percent is not None and (overlap_percent >= 1 or overlap_percent < 0):
         raise Exception("Invalid overlap amount")
@@ -39,6 +45,9 @@ def slice_data(X_data: List[List[str]], y_data: List[int], slice_length=100, ove
     return X_sliced, y_sliced
 
 def test():
+    """Test function
+
+    """
     classes = range(5)
     x = [[(x, i) for x in range(1, 5 + i)] for i in classes]
     y = [i for i in classes]

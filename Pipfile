@@ -7,6 +7,7 @@ verify_ssl = true
 mypy = "*"
 numpydoc = "*"
 sphinx = "*"
+pyment = "*"
 
 [packages]
 # Note: cython needed to get fasttext working. Ensure cython is installed first.
