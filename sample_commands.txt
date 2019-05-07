@@ -1,19 +1,27 @@
-* Bag of Words Classifier {{{
-
+* Preprocessor {{{
 Takes the unclean data and filters it:
 python bace_driver.py pp bace_data/data -o bace_data/filtered_data --stopwords bace/DistinctCombinedStopWords.csv --export all
+python bace_driver.py pp data --stopwords bace/DistinctCombinedStopWords.csv --export all
 
 Takes the clean data and filters it:
 python bace_driver.py pp bace_data/data_clean -o bace_data/filtered_data_clean --stopwords bace/DistinctCombinedStopWords.csv --export all
+* Preprocessor }}}
+
+
+
+* Bag of Words Classifier {{{
+
 
 Train and test on filtered, uncleaned data with BOW:
 python bace_driver.py bow bace_data/filtered_data/train_texts.csv -t bace_data/filtered_data/test_texts.csv -n 300
 
 Train and test on filtered, cleaned data with BOW:
 python bace_driver.py bow bace_data/filtered_data_clean/train_texts.csv -t bace_data/filtered_data_clean/test_texts.csv -n 300
+python bace_driver.py bow filtered_data_clean/train_texts.csv -t filtered_data_clean/test_texts.csv -n 300
 
 Train on all filtered, cleaned data and test on all filtered data:
 python bace_driver.py bow bace_data/filtered_data_clean/all_texts.csv -t bace_data/filtered_data/all_texts.csv -n 300
+python bace_driver.py bow filtered_data_clean/all_texts.csv -t filtered_data_clean/all_texts.csv -n 300
 
 As above, reversed:
 python bace_driver.py bow bace_data/filtered_data/all_texts.csv -t bace_data/filtered_data_clean/all_texts.csv -n 300
